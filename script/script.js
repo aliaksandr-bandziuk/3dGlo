@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 timerHours.textContent = '00';
                 timerMinutes.textContent = '00';
                 timerSeconds.textContent = '00';
-        let newInterval = setInterval(updateClock, 1000);
+        // let newInterval = setInterval(updateClock, 1000);
                 clearInterval(newInterval);
             }
     }

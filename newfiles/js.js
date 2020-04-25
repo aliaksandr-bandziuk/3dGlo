@@ -1,7 +1,4 @@
 'use strict';
-window.querySelector('DOMContentLoaded', function(){
-
-
 
     let date = new Date(),
         hours = date.getHours(),
@@ -31,4 +28,3 @@ window.querySelector('DOMContentLoaded', function(){
     Сегодня: ${days[date.getDay()]}
     Текущее время ${date.toLocaleTimeString('en')}
     До нового года осталось ${Math.floor((newYear - date)/86400/1000)} дней`;
-    });
