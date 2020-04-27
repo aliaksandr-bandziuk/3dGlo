@@ -47,7 +47,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 timerHours.textContent = '00';
                 timerMinutes.textContent = '00';
                 timerSeconds.textContent = '00';
-        // let newInterval = setInterval(updateClock, 1000);
                 clearInterval(newInterval);
             }
    };
@@ -63,31 +62,44 @@ window.addEventListener('DOMContentLoaded', () => {
 
    // menu
    const toggleMenu = () => {
-        
-      const btnMenu = document.querySelector('.menu'),
-         menu = document.querySelector('menu'),
-         closeBtn = document.querySelector('.close-btn'),
-         menuItems = menu.querySelectorAll('ul>li');
 
-      const handlerMenu = () => {
-         // добавляем и/или убираем класс для меню, который записан в CSS
-         // это анимация
-         menu.classList.toggle('active-menu');
-      };
-
-      btnMenu.addEventListener('click', handlerMenu);
-      closeBtn.addEventListener('click', handlerMenu);
-         
-      menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
-   };
-   
-   toggleMenu();
+      const body = document.querySelector('body'),
+         menu = document.querySelector('menu');
+  
+          const handlerMenu = () =>{
+              // добавляем и/или убираем класс для меню, который записан в CSS
+              // это анимация
+              menu.classList.toggle('active-menu');
+          };
+          
+          body.addEventListener('click', (event) =>{
+              let target = event.target;
+              
+              target = target.closest('.menu');
+              
+               if (!target){
+                   return;
+               } else {
+                  handlerMenu();
+               }
+  
+          });
+  
+          menu.addEventListener('click', (event) =>{
+              let target = event.target;
+              if (target.tagName === 'A'){
+                  handlerMenu();
+              }
+          });
+      
+  };
+  
+  toggleMenu();
 
    // popup
    const togglePopup = () => {
       const popup = document.querySelector('.popup'),
-         popupBtn = document.querySelectorAll('.popup-btn'),
-         popupClose = document.querySelector('.popup-close');
+         popupBtn = document.querySelectorAll('.popup-btn');
 
          let count = 0,
             animation,
@@ -112,18 +124,77 @@ window.addEventListener('DOMContentLoaded', () => {
          });
       });
 
-      popupClose.addEventListener('click', () => {
-         if(screen.width > 768) {
-            // попап пропадает при нажатии на крестик
-            popup.style.display = 'none';
-            popup.firstElementChild.style.left = '0%';
-            count = 0;
-         } else {
-            popup.style.display = 'none';
-         }
 
+      // А ПОЧЕМУ ЭТО ТЕПЕРЬ НЕ НАДО?
+      // popupClose.addEventListener('click', () => {
+      //    if(screen.width > 768) {
+      //       // попап пропадает при нажатии на крестик
+      //       popup.style.display = 'none';
+      //       popup.firstElementChild.style.left = '0%';
+      //       count = 0;
+      //    } else {
+      //       popup.style.display = 'none';
+      //    }
+
+      // });
+
+      popup.addEventListener('click', (event) => {
+         let target = event.target;
+
+         if(target.classList.contains('popup-close')){
+            popup.style.display = 'none';
+         } else {
+            // при клике на таргет и по всей его иерархии
+            // мы получаем блок с классом .popup-content
+            // если не получаем, то возвращается null
+            // с ним и работаем
+            target = target.closest('.popup-content');
+
+            if(!target){
+               popup.style.display = 'none';
+            }
+         }
       });
    };
    togglePopup();
+
+   // табы
+
+   const tabs = () => {
+      const tabHeader = document.querySelector('.service-header'),
+         tab = tabHeader.querySelectorAll('.service-header-tab'),
+         tabContent = document.querySelectorAll('.service-tab');
+
+      // эта функция перебирает все табы,
+      // находит соответствующий и показывает его
+      // а те, которые нам не надо, будут скрываться
+      const toggleTabContent = (index) => {
+         for(let i = 0; i < tabContent.length; i++){
+            if(index === i){
+               tab[i].classList.add('active');
+               tabContent[i].classList.remove('d-none');
+            } else {
+               tab[i].classList.remove('active');
+               tabContent[i].classList.add('d-none');
+            }
+         }
+      };
+      tabHeader.addEventListener('click', (event) => {
+         // получаем элемент, на который мы кликнули
+         let target = event.target;
+            target = target.closest('.service-header-tab');
+            
+         if(target.classList.contains('service-header-tab')){
+            tab.forEach((item, i) => {   
+                  if(item === target){
+                     toggleTabContent(i);
+                  }
+            });
+         }
+      });
+
+   };
+
+   tabs();
 
 });
