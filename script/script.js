@@ -51,14 +51,12 @@ window.addEventListener('DOMContentLoaded', () => {
             }
    };
     countTimer('1 july 2021');
-
    // это на всякий случай
    // устанавливаем интервал
    // countTimer выполняется каждую милисекунду
    // до указанной даты
    // завели часики)))
    // setInterval(countTimer, 1000, '1 july 2020');
-
 
    // menu
    const toggleMenu = () => {
