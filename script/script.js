@@ -62,17 +62,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
    // menu
    const toggleMenu = () => {
-
+            // ввожу боди, чтобы слушать клик и пропадало окно
       const body = document.querySelector('body'),
          menu = document.querySelector('menu');
   
-          const handlerMenu = () =>{
+          const handlerMenu = () => {
               // добавляем и/или убираем класс для меню, который записан в CSS
               // это анимация
               menu.classList.toggle('active-menu');
           };
           
-          body.addEventListener('click', (event) =>{
+          body.addEventListener('click', (event) => {
               let target = event.target;
               
               target = target.closest('.menu');
