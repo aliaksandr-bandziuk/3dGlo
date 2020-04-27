@@ -83,11 +83,12 @@ window.addEventListener('DOMContentLoaded', () => {
   
           });
   
-          menu.addEventListener('click', (event) =>{
+          menu.addEventListener('click', (event) => {
               let target = event.target;
-              if (target.tagName === 'A'){
-                  handlerMenu();
-              }
+
+                  if (target.tagName === 'A'){
+                     handlerMenu();
+                  }
           });
       
   };
