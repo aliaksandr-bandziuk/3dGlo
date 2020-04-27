@@ -79,10 +79,10 @@ window.addEventListener('DOMContentLoaded', () => {
                handlerMenu();
               } else if(target.closest('.active-menu')){
                handlerMenu();
-              } else if(!target.closest('.active-menu')){
-               if(document.querySelector('.active-menu')){
-                  handlerMenu();
-               }
+              } else if(!target.closest('.active-menu') && document.querySelector('.active-menu')){
+                  {
+                     handlerMenu();
+                  }
               }
           });
       
