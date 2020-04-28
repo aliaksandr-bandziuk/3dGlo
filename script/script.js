@@ -197,8 +197,6 @@ window.addEventListener('DOMContentLoaded', () => {
       const slide = document.querySelectorAll('.portfolio-item'),
          // кнопки-стрелки на слайдере
          btn = document.querySelectorAll('.portfolio-btn'),
-         // точки под слайдером
-         dot = document.querySelectorAll('.dot'),
          // родитель спрятанных точек
          portfolioDots = document.querySelector('.portfolio-dots'),
          // родитель слайдера (для делегирования)
@@ -206,7 +204,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // номер слайда
       let currentSlide = 0,
-         interval;
+         interval,
+         // точки под слайдером
+         dot = document.querySelectorAll('.dot');
 
       const getAddDots = () => {  
          slide.forEach((index) => {
@@ -217,6 +217,8 @@ window.addEventListener('DOMContentLoaded', () => {
                }
                portfolioDots.append(li);
          });
+         // точки под слайдером переопределяем после getAddDots();
+        dot = document.querySelectorAll('.dot');
       };
         getAddDots();
 
