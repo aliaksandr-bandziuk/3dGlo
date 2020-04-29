@@ -335,5 +335,47 @@ window.addEventListener('DOMContentLoaded', () => {
    };
    slider();
 
+   // Team pictures
+   const teamPictures = () => {
+      const command = document.querySelector('#command');
+      let newImage = '';
+
+      command.addEventListener('mouseover', event => {
+          if (event.target.matches('.command__photo')) {
+              newImage = event.target.getAttribute('src');
+              event.target.setAttribute('src', event.target.dataset.img);
+          }
+      });
+
+      command.addEventListener('mouseout', event => {
+          if (event.target.matches('.command__photo')) {
+              event.target.setAttribute('src', newImage);
+          }
+      });
+  };
+  teamPictures();
+
+  // Calculator
+  const digitValidation = () => {
+     // родитель инпутов
+     const calcBlock = document.querySelector('.calc-block'),
+      // общий класс для инпутов
+      calcItem = document.querySelector('.calc-item'),
+      // площадь
+      calcSquare = document.querySelector('.calc-square'),
+      // количество помещений
+      calcCount = document.querySelector('.calc-count'),
+      // срок исполнения
+      calcDay = document.querySelector('.calc-day');
+     
+
+      calcBlock.addEventListener('input', (event) => {
+         if(event.target.matches('input')){
+            event.target.value = event.target.value.match(/^[0-9]*$/);
+         }
+      });
+     
+  };
+  digitValidation();
 
 });
