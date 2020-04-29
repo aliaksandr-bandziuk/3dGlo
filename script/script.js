@@ -368,7 +368,6 @@ window.addEventListener('DOMContentLoaded', () => {
       // срок исполнения
       calcDay = document.querySelector('.calc-day');
      
-
       calcBlock.addEventListener('input', (event) => {
          if(event.target.matches('input')){
             event.target.value = event.target.value.match(/^[0-9]*$/);
