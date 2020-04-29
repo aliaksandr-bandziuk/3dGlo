@@ -370,7 +370,7 @@ window.addEventListener('DOMContentLoaded', () => {
      
       calcBlock.addEventListener('input', (event) => {
          if(event.target.matches('input')){
-            event.target.value = event.target.value.match(/^[0-9]*$/);
+            event.target.value = event.target.value.replace(/\D/g, '');
          }
       });
      
