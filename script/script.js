@@ -445,4 +445,67 @@ window.addEventListener('DOMContentLoaded', () => {
   };
   calc(100);
 
+  // send-ajax-form
+
+  const sendForm = () => {
+     const errorMessage = "Что-то пошло не так...",
+         loadMessage = "Загрузка...",
+         successMessage = "Спасибо! Мы скоро с вами свяжемся";
+
+      const form = document.getElementById('form1');
+
+      // добавляем элемент, в который будем помещать сообщение
+      const statusMessage = document.createElement('div');
+      statusMessage.style.cssText = 'font-size: 2rem';
+      form.appendChild(statusMessage);
+
+      form.addEventListener('submit', (event) => {
+         event.preventDefault();
+         form.appendChild(statusMessage);
+
+         //создаем объект request
+         const request = new XMLHttpRequest();
+
+         request.addEventListener('readystatechange', () => {
+            statusMessage.textContent = loadMessage;
+            if(request.readyState !== 4){
+               return;
+            }
+            if(request.status === 200){
+               statusMessage.textContent = successMessage;
+            } else {
+               statusMessage.textContent = errorMessage;
+            }
+
+         });
+
+
+         // настраиваем соединение
+         // отправляем данные на сервер
+         request.open('POST', './server.php');
+         // настраиваем заголовки
+         request.setRequestHeader('Content-Type', 'application/json');
+         // передаем форму, с которой хотим получить данные
+         const formData = new FormData(form);
+         let body = {};
+
+         // for (let val of formData.entries()){
+         //    body[val[0]] = val[1]
+         // }
+
+         formData.forEach((val, key) => {
+            body[key] = val;
+         });
+
+         // открываем соединение
+         // и передаем данные с помощью метода send()
+         // если надо перегнать в JSON
+         request.send(JSON.stringify(body));
+         // если в JSON перегонять не надо
+         // request.send(formData);
+
+      });
+  };
+  sendForm();
+  
 });
