@@ -663,21 +663,20 @@ sendForm2();
    // formValidation
    const formValidation = () => {
       const formPhone = document.querySelectorAll('.form-phone'),
-         formName = document.querySelectorAll('.form-name');
+         formName = document.querySequerySelectorAlllector('.form-name');
 
-      formPhone.addEventListener('input', (event) => {
-         if(event.target.matches('input')){
-            event.target.value = event.target.value.replace(/\d/g, '');
-         }
+      formPhone.forEach((item) => {
+         item.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/\D/g, '');
+         });
       });
 
-      formName.addEventListener('input', (event) => {
-         if(event.target.matches('input')){
-            event.target.value = event.target.value.replace(/[а-я]''/g, '');
-         }
+      formName.forEach((item) => {
+         item.addEventListener('input', (event) => {
+            event.target.value = event.target.value.replace(/[^а-я]/g, '');
+         });
       });
-
-      };
-      formValidation();
+   };
+   formValidation();
  
 });
