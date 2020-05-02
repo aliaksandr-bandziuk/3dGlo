@@ -657,10 +657,8 @@ const sendForm2 = () => {
        // если в JSON перегонять не надо
        // request.send(formData);
     };
-};
-sendForm2();
 
-   // formValidation
+    // formValidation
    const formValidation = () => {
       const formPhone = document.querySelectorAll('.form-phone'),
          formName = document.querySequerySelectorAlllector('.form-name');
@@ -678,5 +676,9 @@ sendForm2();
       });
    };
    formValidation();
+};
+sendForm2();
+
+   
  
 });
