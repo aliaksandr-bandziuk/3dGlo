@@ -451,19 +451,21 @@ window.addEventListener('DOMContentLoaded', () => {
         loadMessage = "Загрузка...",
         successMessage = "Спасибо! Мы скоро с вами свяжемся";
 
-     const form = document.getElementById('form1');
+     const form1 = document.getElementById('form1'),
+      form2 = document.getElementById('form2'),
+      form3 = document.getElementById('form3');
 
      // добавляем элемент, в который будем помещать сообщение
      const statusMessage = document.createElement('div');
      statusMessage.style.cssText = 'font-size: 2rem';
-     form.appendChild(statusMessage);
+     form1.appendChild(statusMessage);
 
-     form.addEventListener('submit', (event) => {
+     form1.addEventListener('submit', (event) => {
         event.preventDefault();
-        form.appendChild(statusMessage);
+        form1.appendChild(statusMessage);
         statusMessage.textContent = loadMessage;
         // передаем форму, с которой хотим получить данные
-        const formData = new FormData(form);
+        const formData = new FormData(form1);
         let body = {};
 
         // for (let val of formData.entries()){
@@ -476,7 +478,7 @@ window.addEventListener('DOMContentLoaded', () => {
         postData(body, 
            () => {
               statusMessage.textContent = successMessage;
-              form.reset();
+              form1.reset();
            }, 
            (error) => {
               statusMessage.textContent = errorMessage;
@@ -485,184 +487,98 @@ window.addEventListener('DOMContentLoaded', () => {
         );
      });
 
-     const postData = (body, outputData, errorData) => {
-        //создаем объект request
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => {
+     form3.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form3.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      // передаем форму, с которой хотим получить данные
+      const formData = new FormData(form3);
+      let body = {};
+
+      // for (let val of formData.entries()){
+      //    body[val[0]] = val[1]
+      // }
+
+      formData.forEach((val, key) => {
+         body[key] = val;
+      });
+      postData(body, 
+         () => {
+            statusMessage.textContent = successMessage;
+            form3.reset();
+         }, 
+         (error) => {
+            statusMessage.textContent = errorMessage;
+            console.error(error);
+         }
+      );
+   });
+
+   form2.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form2.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      // передаем форму, с которой хотим получить данные
+      const formData = new FormData(form2);
+      let body = {};
+
+      // for (let val of formData.entries()){
+      //    body[val[0]] = val[1]
+      // }
+
+      formData.forEach((val, key) => {
+         body[key] = val;
+      });
+      postData(body, 
+         () => {
+            statusMessage.textContent = successMessage;
+            form2.reset();
+         }, 
+         (error) => {
+            statusMessage.textContent = errorMessage;
+            console.error(error);
+         }
+      );
+   });
+
+   const postData = (body, outputData, errorData) => {
+      //создаем объект request
+      const request = new XMLHttpRequest();
+      request.addEventListener('readystatechange', () => {
            
-           if(request.readyState !== 4){
-              return;
-           }
-           if(request.status === 200){
-              outputData();
-           } else {
-              errorData(request.status);
-           }
+         if(request.readyState !== 4){
+            return;
+         }
+         if(request.status === 200){
+            outputData();
+         } else {
+            errorData(request.status);
+         }
 
-        });
-        // настраиваем соединение
-        // отправляем данные на сервер
-        request.open('POST', './server.php');
-        // настраиваем заголовки
-        request.setRequestHeader('Content-Type', 'application/json');
+      });
+      // настраиваем соединение
+      // отправляем данные на сервер
+      request.open('POST', './server.php');
+      // настраиваем заголовки
+      request.setRequestHeader('Content-Type', 'application/json');
 
-        // открываем соединение
-        // и передаем данные с помощью метода send()
-        // если надо перегнать в JSON
-        request.send(JSON.stringify(body));
-        // если в JSON перегонять не надо
-        // request.send(formData);
-     };
+      // открываем соединение
+      // и передаем данные с помощью метода send()
+      // если надо перегнать в JSON
+      request.send(JSON.stringify(body));
+      // если в JSON перегонять не надо
+      // request.send(formData);
+   };
 
 
  };
  sendForm();
 
- const sendForm3 = () => {
-   const errorMessage = "Что-то пошло не так...",
-       loadMessage = "Загрузка...",
-       successMessage = "Спасибо! Мы скоро с вами свяжемся";
-
-    const form3 = document.getElementById('form3');
-
-    // добавляем элемент, в который будем помещать сообщение
-    const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = 'font-size: 2rem; color: white';
-    form3.appendChild(statusMessage);
-
-    form3.addEventListener('submit', (event) => {
-       event.preventDefault();
-       form3.appendChild(statusMessage);
-       statusMessage.textContent = loadMessage;
-       // передаем форму, с которой хотим получить данные
-       const formData3 = new FormData(form3);
-       let body = {};
-
-       // for (let val of formData.entries()){
-       //    body[val[0]] = val[1]
-       // }
-
-       formData3.forEach((val, key) => {
-          body[key] = val;
-       });
-       postData(body, 
-          () => {
-             statusMessage.textContent = successMessage;
-             form3.reset();
-          }, 
-          (error) => {
-             statusMessage.textContent = errorMessage;
-             console.error(error);
-          }
-       );
-    });
-
-    const postData = (body, outputData, errorData) => {
-       //создаем объект request
-       const request = new XMLHttpRequest();
-       request.addEventListener('readystatechange', () => {
-          
-          if(request.readyState !== 4){
-             return;
-          }
-          if(request.status === 200){
-             outputData();
-          } else {
-             errorData(request.status);
-          }
-
-       });
-       // настраиваем соединение
-       // отправляем данные на сервер
-       request.open('POST', './server.php');
-       // настраиваем заголовки
-       request.setRequestHeader('Content-Type', 'application/json');
-
-       // открываем соединение
-       // и передаем данные с помощью метода send()
-       // если надо перегнать в JSON
-       request.send(JSON.stringify(body));
-       // если в JSON перегонять не надо
-       // request.send(formData);
-    };
-
-
-};
-sendForm3();
-
-const sendForm2 = () => {
-   const errorMessage = "Что-то пошло не так...",
-       loadMessage = "Загрузка...",
-       successMessage = "Спасибо! Мы скоро с вами свяжемся";
-
-    const form2 = document.getElementById('form2');
-
-    // добавляем элемент, в который будем помещать сообщение
-    const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = 'font-size: 2rem; color: white';
-    form2.appendChild(statusMessage);
-
-    form2.addEventListener('submit', (event) => {
-       event.preventDefault();
-       form2.appendChild(statusMessage);
-       statusMessage.textContent = loadMessage;
-       // передаем форму, с которой хотим получить данные
-       const formData2 = new FormData(form2);
-       let body = {};
-
-       // for (let val of formData.entries()){
-       //    body[val[0]] = val[1]
-       // }
-
-       formData2.forEach((val, key) => {
-          body[key] = val;
-       });
-       postData(body, 
-          () => {
-             statusMessage.textContent = successMessage;
-             form2.reset();
-          }, 
-          (error) => {
-             statusMessage.textContent = errorMessage;
-             console.error(error);
-          }
-       );
-    });
-
-    const postData = (body, outputData, errorData) => {
-       //создаем объект request
-       const request = new XMLHttpRequest();
-       request.addEventListener('readystatechange', () => {
-          
-          if(request.readyState !== 4){
-             return;
-          }
-          if(request.status === 200){
-             outputData();
-          } else {
-             errorData(request.status);
-          }
-
-       });
-       // настраиваем соединение
-       // отправляем данные на сервер
-       request.open('POST', './server.php');
-       // настраиваем заголовки
-       request.setRequestHeader('Content-Type', 'application/json');
-
-       // открываем соединение
-       // и передаем данные с помощью метода send()
-       // если надо перегнать в JSON
-       request.send(JSON.stringify(body));
-       // если в JSON перегонять не надо
-       // request.send(formData);
-    };
-
     // formValidation
-   const formValidation = () => {
+    const formValidation = () => {
       const formPhone = document.querySelectorAll('.form-phone'),
-         formName = document.querySequerySelectorAlllector('.form-name');
-
+         formName = document.querySelectorAll('.form-name');
+console.log(formPhone);
       formPhone.forEach((item) => {
          item.addEventListener('input', (event) => {
             event.target.value = event.target.value.replace(/\D/g, '');
@@ -676,9 +592,5 @@ const sendForm2 = () => {
       });
    };
    formValidation();
-};
-sendForm2();
-
-   
  
 });
