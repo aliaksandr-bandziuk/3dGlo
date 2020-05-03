@@ -451,95 +451,41 @@ window.addEventListener('DOMContentLoaded', () => {
         loadMessage = "Загрузка...",
         successMessage = "Спасибо! Мы скоро с вами свяжемся";
 
-     const form1 = document.getElementById('form1'),
-      form2 = document.getElementById('form2'),
-      form3 = document.getElementById('form3');
-
      // добавляем элемент, в который будем помещать сообщение
      const statusMessage = document.createElement('div');
-     statusMessage.style.cssText = 'font-size: 2rem';
-     form1.appendChild(statusMessage);
+     statusMessage.style.cssText = 'font-size: 2rem; color: white';
 
-     form1.addEventListener('submit', (event) => {
-        event.preventDefault();
-        form1.appendChild(statusMessage);
-        statusMessage.textContent = loadMessage;
-        // передаем форму, с которой хотим получить данные
-        const formData = new FormData(form1);
-        let body = {};
+      const forms = document.querySelectorAll('form');
 
-        // for (let val of formData.entries()){
-        //    body[val[0]] = val[1]
-        // }
-
-        formData.forEach((val, key) => {
-           body[key] = val;
-        });
-        postData(body, 
-           () => {
-              statusMessage.textContent = successMessage;
-              form1.reset();
-           }, 
-           (error) => {
-              statusMessage.textContent = errorMessage;
-              console.error(error);
-           }
-        );
-     });
-
-     form3.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form3.appendChild(statusMessage);
-      statusMessage.textContent = loadMessage;
-      // передаем форму, с которой хотим получить данные
-      const formData = new FormData(form3);
-      let body = {};
-
-      // for (let val of formData.entries()){
-      //    body[val[0]] = val[1]
-      // }
-
-      formData.forEach((val, key) => {
-         body[key] = val;
+      forms.forEach(form => {
+         form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            // передаем форму, с которой хотим получить данные
+            const formData = new FormData(form);
+            let body = {};
+    
+            // for (let val of formData.entries()){
+            //    body[val[0]] = val[1]
+            // }
+    
+            formData.forEach((val, key) => {
+               body[key] = val;
+            });
+            postData(body, 
+               () => {
+                  statusMessage.textContent = successMessage;
+                  form.reset();
+                  successMessage.reset();
+               }, 
+               (error) => {
+                  statusMessage.textContent = errorMessage;
+                  console.error(error);
+               }
+            );
+         });
       });
-      postData(body, 
-         () => {
-            statusMessage.textContent = successMessage;
-            form3.reset();
-         }, 
-         (error) => {
-            statusMessage.textContent = errorMessage;
-            console.error(error);
-         }
-      );
-   });
-
-   form2.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form2.appendChild(statusMessage);
-      statusMessage.textContent = loadMessage;
-      // передаем форму, с которой хотим получить данные
-      const formData = new FormData(form2);
-      let body = {};
-
-      // for (let val of formData.entries()){
-      //    body[val[0]] = val[1]
-      // }
-
-      formData.forEach((val, key) => {
-         body[key] = val;
-      });
-      postData(body, 
-         () => {
-            statusMessage.textContent = successMessage;
-            form2.reset();
-         }, 
-         (error) => {
-            statusMessage.textContent = errorMessage;
-            console.error(error);
-         }
-      );
-   });
 
    const postData = (body, outputData, errorData) => {
       //создаем объект request
@@ -581,13 +527,13 @@ window.addEventListener('DOMContentLoaded', () => {
 console.log(formPhone);
       formPhone.forEach((item) => {
          item.addEventListener('input', (event) => {
-            event.target.value = event.target.value.replace(/\D/g, '');
+            event.target.value = event.target.value.replace(/[^0-9+]/g, '');
          });
       });
 
       formName.forEach((item) => {
          item.addEventListener('input', (event) => {
-            event.target.value = event.target.value.replace(/[^а-я]/g, '');
+            event.target.value = event.target.value.replace(/[^А-Я|а-я]/g, '');
          });
       });
    };
