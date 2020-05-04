@@ -477,7 +477,6 @@ window.addEventListener('DOMContentLoaded', () => {
                () => {
                   statusMessage.textContent = successMessage;
                   form.reset();
-                  successMessage.reset();
                }, 
                (error) => {
                   statusMessage.textContent = errorMessage;
