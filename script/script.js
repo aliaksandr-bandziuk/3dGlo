@@ -486,36 +486,36 @@ window.addEventListener('DOMContentLoaded', () => {
          });
       });
 
-      const promise = new Promise((resolve, reject) => {
          const postData = (body, outputData, errorData) => {
-            //создаем объект request
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
+            return new Promise(() => {
+                //создаем объект request
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
                  
-               if(request.readyState !== 4){
-                  return;
-               }
-               if(request.status === 200){
-                  outputData();
-               } else {
-                  errorData(request.status);
-               }
+                if(request.readyState !== 4){
+                    return;
+                }
+                if(request.status === 200){
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
       
+                });
+                // настраиваем соединение
+                // отправляем данные на сервер
+                request.open('POST', './server.php');
+                // настраиваем заголовки
+                request.setRequestHeader('Content-Type', 'application/json');
+      
+                // открываем соединение
+                // и передаем данные с помощью метода send()
+                // если надо перегнать в JSON
+                request.send(JSON.stringify(body));
+                // если в JSON перегонять не надо
+                // request.send(formData);
             });
-            // настраиваем соединение
-            // отправляем данные на сервер
-            request.open('POST', './server.php');
-            // настраиваем заголовки
-            request.setRequestHeader('Content-Type', 'application/json');
-      
-            // открываем соединение
-            // и передаем данные с помощью метода send()
-            // если надо перегнать в JSON
-            request.send(JSON.stringify(body));
-            // если в JSON перегонять не надо
-            // request.send(formData);
-         };
-      });
+        };
 
  };
  sendForm();
@@ -524,19 +524,19 @@ window.addEventListener('DOMContentLoaded', () => {
     const formValidation = () => {
       const formPhone = document.querySelectorAll('.form-phone'),
          formName = document.querySelectorAll('.form-name');
-console.log(formPhone);
-      formPhone.forEach((item) => {
+
+        formPhone.forEach((item) => {
          item.addEventListener('input', (event) => {
             event.target.value = event.target.value.replace(/[^0-9+]/g, '');
          });
-      });
+        });
 
-      formName.forEach((item) => {
+        formName.forEach((item) => {
          item.addEventListener('input', (event) => {
             event.target.value = event.target.value.replace(/[^А-Я|а-я]/g, '');
          });
-      });
-   };
-   formValidation();
+        });
+    };
+    formValidation();
  
 });
