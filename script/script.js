@@ -481,15 +481,16 @@ window.addEventListener('DOMContentLoaded', () => {
                   }
                   statusMessage.textContent = successMessage;
                   form.reset();
+                  setTimeout(() => {
+                     statusMessage.remove()
+                  }, 5000);
                })
                .catch((error) => {
                statusMessage.textContent = errorMessage;
+               setTimeout(() => {
+                  statusMessage.remove()
+               }, 5000);
                });
-               function removeSuccessMessage() {
-                  setTimeout(successMessage.remove(), 5000);
-               }
-               removeSuccessMessage();
-               console.log(successMessage);
          });
       });
 
