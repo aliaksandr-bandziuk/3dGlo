@@ -486,7 +486,7 @@ window.addEventListener('DOMContentLoaded', () => {
                statusMessage.textContent = errorMessage;
                });
                function removeSuccessMessage() {
-                  setTimeout(successMessage.remove, 1000);
+                  setTimeout(successMessage.remove(), 5000);
                }
                removeSuccessMessage();
                console.log(successMessage);
