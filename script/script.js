@@ -473,49 +473,66 @@ window.addEventListener('DOMContentLoaded', () => {
             formData.forEach((val, key) => {
                body[key] = val;
             });
-            postData(body, 
-               () => {
+            
+            postData(body)
+               .then((response) => {
+                  if(response.status !== 200){
+                   throw new Error('status network not 200');
+                  }
                   statusMessage.textContent = successMessage;
                   form.reset();
-               }, 
-               (error) => {
-                  statusMessage.textContent = errorMessage;
-                  console.error(error);
+               })
+               .catch((error) => {
+               statusMessage.textContent = errorMessage;
+               });
+               function removeSuccessMessage() {
+                  setTimeout(successMessage.remove, 1000);
                }
-            );
+               removeSuccessMessage();
+               console.log(successMessage);
          });
       });
 
-         const postData = (body, outputData, errorData) => {
-            return new Promise(() => {
-                //создаем объект request
-                const request = new XMLHttpRequest();
-                request.addEventListener('readystatechange', () => {
+      const postData = (body) => {
+         return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+         });
+      };
+
+      //    const postData = (body, outputData, errorData) => {
+      //       return new Promise(() => {
+      //           //создаем объект request
+      //           const request = new XMLHttpRequest();
+      //           request.addEventListener('readystatechange', () => {
                  
-                if(request.readyState !== 4){
-                    return;
-                }
-                if(request.status === 200){
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
+      //           if(request.readyState !== 4){
+      //               return;
+      //           }
+      //           if(request.status === 200){
+      //               outputData();
+      //           } else {
+      //               errorData(request.status);
+      //           }
       
-                });
-                // настраиваем соединение
-                // отправляем данные на сервер
-                request.open('POST', './server.php');
-                // настраиваем заголовки
-                request.setRequestHeader('Content-Type', 'application/json');
+      //           });
+      //           // настраиваем соединение
+      //           // отправляем данные на сервер
+      //           request.open('POST', './server.php');
+      //           // настраиваем заголовки
+      //           request.setRequestHeader('Content-Type', 'application/json');
       
-                // открываем соединение
-                // и передаем данные с помощью метода send()
-                // если надо перегнать в JSON
-                request.send(JSON.stringify(body));
-                // если в JSON перегонять не надо
-                // request.send(formData);
-            });
-        };
+      //           // открываем соединение
+      //           // и передаем данные с помощью метода send()
+      //           // если надо перегнать в JSON
+      //           request.send(JSON.stringify(body));
+      //           // если в JSON перегонять не надо
+      //           // request.send(formData);
+      //       });
+      //   };
 
  };
  sendForm();
