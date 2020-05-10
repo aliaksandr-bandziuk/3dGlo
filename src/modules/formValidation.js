@@ -18,17 +18,13 @@ const formValidation = () => {
       });
      });
 
-     topForm.forEach((item) => {
-      item.addEventListener('input', (event) => {
+     topForm.addEventListener('input', (event) => {
          event.target.value = event.target.value.replace(/[^А-Я|а-я]/g, '');
-      });
      });
 
-     message.forEach((item) => {
-      item.addEventListener('input', (event) => {
-         event.target.value = event.target.value.replace(/[^А-Я|а-я]/g, '');
+     message.addEventListener('input', (event) => {
+      event.target.value = event.target.value.replace(/[^А-Я|а-я]/g, '');
       });
-     });
  };
 
  export default formValidation;
